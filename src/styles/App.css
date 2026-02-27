@@ -5,6 +5,8 @@
   --secondary-color: #666666;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-serif: 'Playfair Display', serif;
+  --font-wild: 'Unbounded', sans-serif;
+  --font-mono: 'Space Grotesk', sans-serif;
 }
 
 * {
@@ -226,7 +228,28 @@ section {
 .page-title { display: none; }
 
 @media (max-width: 768px) {
-  .logo-container { max-width: 300px; }
-  nav ul { gap: 1.5rem; }
-  nav a { font-size: 0.75rem; }
+  .logo-container { 
+    max-width: 240px; /* Smaller logo for mobile */
+  }
+  
+  nav {
+    padding: 1rem 0;
+  }
+
+  nav ul { 
+    gap: 1.5rem; /* Tighter gap for small screens */
+    padding: 0 1rem;
+  }
+  
+  nav a { 
+    font-size: 0.65rem; /* Smaller icons/text */
+  }
+
+  nav li:nth-child(1) .nav-icon { height: 35px; }
+  nav li:nth-child(2) .nav-icon { height: 30px; }
+  nav li:nth-child(3) .nav-icon, nav li:nth-child(4) .nav-icon { height: 28px; }
+
+  .global-cart-link {
+    right: 1rem;
+  }
 }

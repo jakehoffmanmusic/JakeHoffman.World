@@ -14,6 +14,7 @@ const Works = () => {
     { id: 'FtEe3wyxfYQ', title: "Didn't Like Me Back (Official Music Video)", youtubeId: 'FtEe3wyxfYQ' },
     { id: 'MCFallokdvo', title: 'Let It Grow Live @ Purgatory', youtubeId: 'MCFallokdvo' },
     { id: 'aH90TBVCYGM', title: "Jake's Road Kitchen: Road Taco", youtubeId: 'aH90TBVCYGM' },
+    { id: 'GB3l9gjvHgA', title: '"Dirty Laundry" Live w/ Kumbaya', youtubeId: 'GB3l9gjvHgA' },
   ];
 
   const audio = [
@@ -105,7 +106,7 @@ const Works = () => {
               onClick={() => handleVideoSelect(video)}
             >
               <div className="thumb-wrapper">
-                <img src={`https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg`} alt={video.title} />
+                <img src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`} alt={video.title} />
                 <div className="play-overlay">▶</div>
               </div>
               <p className="thumb-title">{video.title}</p>
