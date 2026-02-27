@@ -86,6 +86,7 @@ const Cart = () => {
                       style={{ layout: "vertical", shape: "rect" }}
                       createOrder={(data, actions) => {
                         return actions.order.create({
+                          intent: "CAPTURE",
                           purchase_units: [
                             {
                               description: "Jake Hoffman Music Store Purchase",

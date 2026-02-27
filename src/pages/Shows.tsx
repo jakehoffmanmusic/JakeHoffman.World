@@ -3,7 +3,7 @@ import '../styles/Pages.css';
 const Shows = () => {
   // FUTURE UPLOADS: Add new show objects to this array.
   // Format: { id: number, date: 'MONTH DD', venue: 'Venue Name', location: 'City, ST', ticketLink: 'URL' }
-  const shows = [
+  const shows: any[] = [
     /* 
     { 
       id: 1, 
