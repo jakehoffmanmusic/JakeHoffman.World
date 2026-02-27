@@ -1,0 +1,116 @@
+import { useState } from 'react';
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { useCart } from '../App';
+import '../styles/Pages.css';
+
+const PAYPAL_CLIENT_ID = "sb"; // "sb" for sandbox. Replace with your LIVE Client ID later.
+
+const Cart = () => {
+  const { cartItems, removeFromCart, clearCart } = useCart();
+  const [orderConfirmed, setOrderConfirmed] = useState(false);
+  const [orderDetails, setOrderDetails] = useState<any>(null);
+
+  const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+
+  const handleApprove = (data: any, actions: any) => {
+    return actions.order.capture().then((details: any) => {
+      setOrderDetails(details);
+      setOrderConfirmed(true);
+      clearCart();
+    });
+  };
+
+  if (orderConfirmed) {
+    return (
+      <div className="container">
+        <div className="confirmation-page">
+          <div className="confirmation-card">
+            <div className="success-icon">✓</div>
+            <h2>Order Confirmed!</h2>
+            <p>Thank you, {orderDetails?.payer?.name?.given_name}. Your purchase was successful.</p>
+            <div className="order-summary">
+              <p><strong>Order ID:</strong> {orderDetails?.id}</p>
+              <p><strong>Total Paid:</strong> ${orderDetails?.purchase_units[0]?.amount?.value}</p>
+            </div>
+            <p className="email-note">A receipt has been sent to your email.</p>
+            <a href="/" className="back-to-shop-btn">Continue Shopping</a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <PayPalScriptProvider options={{ 
+      "clientId": PAYPAL_CLIENT_ID,
+      "currency": "USD"
+    }}>
+      <div className="container">
+        <div className="cart-page">
+          <h2>Your Cart</h2>
+          
+          {cartItems.length === 0 ? (
+            <div className="empty-cart">
+              <p>Your cart is empty.</p>
+              <a href="/" className="back-to-shop-btn">Go Home</a>
+            </div>
+          ) : (
+            <div className="cart-content">
+              <div className="cart-items-list">
+                {cartItems.map((item, index) => (
+                  <div key={index} className="cart-item-row">
+                    <img src={item.image} alt={item.name} className="cart-item-thumb" />
+                    <div className="cart-item-info">
+                      <h4>{item.name}</h4>
+                      <p>${item.price.toFixed(2)}</p>
+                    </div>
+                    <button className="remove-item-btn" onClick={() => removeFromCart(item.id)}>✕</button>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="cart-summary">
+                <div className="summary-card">
+                  <h3>Order Summary</h3>
+                  <div className="summary-row">
+                    <span>Subtotal</span>
+                    <span>${total.toFixed(2)}</span>
+                  </div>
+                  <div className="summary-row total">
+                    <span>Total</span>
+                    <span>${total.toFixed(2)}</span>
+                  </div>
+                  
+                  <div className="paypal-checkout-container">
+                    <PayPalButtons
+                      style={{ layout: "vertical", shape: "rect" }}
+                      createOrder={(data, actions) => {
+                        return actions.order.create({
+                          purchase_units: [
+                            {
+                              description: "Jake Hoffman Music Store Purchase",
+                              amount: {
+                                currency_code: "USD",
+                                value: total.toString(),
+                              },
+                              payee: {
+                                email_address: "JakeHoffmanMusic@gmail.com"
+                              }
+                            },
+                          ],
+                        });
+                      }}
+                      onApprove={handleApprove}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </PayPalScriptProvider>
+  );
+};
+
+export default Cart;

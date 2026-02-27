@@ -1,0 +1,232 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --accent-color: #333333;
+  --secondary-color: #666666;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Playfair Display', serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+/* Intro Animations */
+.intro-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.intro-rhino-wrapper {
+  position: relative;
+  width: 60vw;
+  max-width: 600px;
+  animation: rhino-sequence 3s forwards cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.intro-rhino {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@keyframes rhino-sequence {
+  0% { opacity: 0; transform: scale(1); }
+  33% { opacity: 1; transform: scale(1); }
+  66% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+
+.app-fade-in {
+  animation: fade-in 1s forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 88vw; 
+  background-image: url('../assets/rhino-stencil-black.png');
+  background-repeat: no-repeat;
+  background-position: center 0px; 
+  background-size: 88%;
+  opacity: 0.56;
+  z-index: -1;
+  pointer-events: none;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.global-cart-link {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #000;
+  transition: opacity 0.3s ease;
+}
+
+.cart-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -12px;
+  background: #000;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+}
+
+.intro-container.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease;
+  pointer-events: none;
+}
+
+header {
+  position: relative;
+  z-index: 10;
+  padding: 3rem 0 0rem 0;
+  text-align: center;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.2) 70%, rgba(255, 255, 255, 0) 100%);
+}
+
+.logo-container {
+  max-width: 480px;
+  margin: 0 auto 0.5rem auto;
+}
+
+.logo-container img {
+  width: 100%;
+  height: auto;
+}
+
+nav {
+  padding: 1.5rem 0;
+  z-index: 100;
+  border: none;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.2) 70%, rgba(255, 255, 255, 0) 100%);
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  align-items: center;
+}
+
+nav a {
+  opacity: 1;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 4px;
+}
+
+.nav-icon {
+  height: auto;
+  width: auto;
+  filter: none;
+  transition: all 0.3s ease;
+}
+
+nav li:nth-child(1) .nav-icon { height: 50px; }
+nav li:nth-child(2) .nav-icon { height: 39px; }
+nav li:nth-child(3) .nav-icon, nav li:nth-child(4) .nav-icon { height: 36px; }
+
+nav a:hover .nav-icon, nav a.active .nav-icon { filter: grayscale(0%); }
+
+nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--text-color);
+  transition: width 0.3s ease;
+}
+
+nav a:hover::after, nav a.active::after { width: 100%; }
+nav a:hover, nav a.active { opacity: 1; }
+
+main {
+  flex: 1;
+  padding: 2rem 0 5rem 0;
+}
+
+section {
+  padding: 2rem 0;
+}
+
+.page-title { display: none; }
+
+@media (max-width: 768px) {
+  .logo-container { max-width: 300px; }
+  nav ul { gap: 1.5rem; }
+  nav a { font-size: 0.75rem; }
+}
