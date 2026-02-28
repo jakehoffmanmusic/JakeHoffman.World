@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useApp } from '../App';
 import '../styles/Pages.css';
 
 const Videos = () => {
   const { stopAudio } = useApp();
+  
   const videos = [
     { id: 'n421r-1ao7o', title: "Jake Hoffman Live @ Arlene's Grocery 10/12/25", youtubeId: 'n421r-1ao7o' },
     { id: 'UGCO4XJBw8c', title: 'Voices In My Head (Official Music Video)', youtubeId: 'UGCO4XJBw8c' },
@@ -15,28 +16,38 @@ const Videos = () => {
   ];
 
   const [activeVideo, setActiveVideo] = useState(videos[0]);
+  const [isPlayingVideo, setIsPlayingVideo] = useState(false);
 
   const handleVideoSelect = (video: any) => {
     setActiveVideo(video);
-    stopAudio(); // Stop persistent music when a video is selected
+    setIsPlayingVideo(false); // Reset to "Click to Play" state for new video
+    stopAudio(); 
+  };
+
+  const startVideo = () => {
+    stopAudio(); // Kill background music hard
+    setIsPlayingVideo(true);
   };
 
   return (
     <div className="works-page-v2">
       <section className="featured-video-section">
         <div className="video-player-container">
-          <iframe
-            key={activeVideo.id}
-            src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?enablejsapi=1`}
-            title={activeVideo.title}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            onLoad={() => {
-              // This is a simple hook to stop music when iframe loads/plays
-              // Real detection of 'play' requires YouTube API but stopAudio() on select covers most cases
-            }}
-          ></iframe>
+          {!isPlayingVideo ? (
+            <div className="video-placeholder" onClick={startVideo}>
+              <img src={`https://img.youtube.com/vi/${activeVideo.youtubeId}/maxresdefault.jpg`} alt={activeVideo.title} />
+              <div className="big-play-btn">▶</div>
+            </div>
+          ) : (
+            <iframe
+              key={activeVideo.id}
+              src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&enablejsapi=1`}
+              title={activeVideo.title}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          )}
         </div>
       </section>
 

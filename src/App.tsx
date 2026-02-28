@@ -16,7 +16,7 @@ import './styles/App.css';
 
 // Context for global state
 interface Product { id: number; name: string; price: number; image: string; description: string; }
-interface AudioTrack { id: string; title: string; file: string; }
+export interface AudioTrack { id: string; title: string; file: string; releaseId: string; }
 
 interface AppContextType {
   cartItems: Product[];
@@ -26,7 +26,8 @@ interface AppContextType {
   // Audio Persistent Player
   currentTrack: AudioTrack | null;
   isPlaying: boolean;
-  playTrack: (track: AudioTrack) => void;
+  playlist: AudioTrack[];
+  playTrack: (track: AudioTrack, releasePlaylist: AudioTrack[]) => void;
   stopAudio: () => void;
   toggleAudio: () => void;
 }
@@ -60,21 +61,31 @@ function Intro({ onFinish }: { onFinish: () => void }) {
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [currentTrack, setCurrentTrack] = useState<AudioTrack | null>(null);
+  const [playlist, setPlaylist] = useState<AudioTrack[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const wasStoppedManually = useRef(false);
 
   const addToCart = (product: Product) => setCartItems(prev => [...prev, product]);
   const removeFromCart = (productId: number) => setCartItems(prev => prev.filter(item => item.id !== productId));
   const clearCart = () => setCartItems([]);
 
-  const playTrack = (track: AudioTrack) => {
+  const playTrack = (track: AudioTrack, releasePlaylist: AudioTrack[]) => {
+    wasStoppedManually.current = false;
+    setPlaylist(releasePlaylist);
     setCurrentTrack(track);
     setIsPlaying(true);
   };
 
   const stopAudio = () => {
+    wasStoppedManually.current = true;
     setIsPlaying(false);
-    if (audioRef.current) audioRef.current.pause();
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = ""; // Strip the source entirely
+      audioRef.current.load();   // Force the browser to dump the audio buffer
+    }
+    setCurrentTrack(null);
   };
 
   const toggleAudio = () => {
@@ -86,8 +97,18 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     setIsPlaying(!isPlaying);
   };
 
+  const playNext = () => {
+    if (!currentTrack || wasStoppedManually.current) return;
+    const currentIndex = playlist.findIndex(t => t.id === currentTrack.id);
+    if (currentIndex < playlist.length - 1) {
+      setCurrentTrack(playlist[currentIndex + 1]);
+    } else {
+      setIsPlaying(false);
+    }
+  };
+
   useEffect(() => {
-    if (currentTrack && audioRef.current) {
+    if (currentTrack && audioRef.current && !wasStoppedManually.current) {
       audioRef.current.src = currentTrack.file;
       audioRef.current.play();
       setIsPlaying(true);
@@ -95,9 +116,9 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   }, [currentTrack]);
 
   return (
-    <AppContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, currentTrack, isPlaying, playTrack, stopAudio, toggleAudio }}>
+    <AppContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, currentTrack, isPlaying, playlist, playTrack, stopAudio, toggleAudio }}>
       {children}
-      <audio ref={audioRef} onEnded={() => setIsPlaying(false)} />
+      <audio ref={audioRef} onEnded={playNext} />
     </AppContext.Provider>
   );
 };
@@ -113,9 +134,8 @@ function AppContent() {
   return (
     <Router>
       <div className="app-fade-in">
-        {/* Global Persistent Player UI */}
         {currentTrack && (
-          <div className={`persistent-player ${isPlaying ? 'active' : ''}`}>
+          <div className={`persistent-player ${currentTrack ? 'active' : ''}`}>
             <div className="player-track-info">
               <span className="now-playing-label">Now Playing</span>
               <span className="track-name">{currentTrack.title}</span>

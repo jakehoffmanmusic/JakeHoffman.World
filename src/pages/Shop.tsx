@@ -1,51 +1,11 @@
 import { useApp } from '../App';
 import '../styles/Pages.css';
-import reflectionCover from '../assets/ReflectionCover.png';
-import iCryCover from '../assets/ICrySingle.png';
-import cocoonCover from '../assets/CocoonSingle.png';
-import hoffmanEPCover from '../assets/HoffmanEP1.png';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  description: string;
-}
 
 const Shop = () => {
   const { addToCart, cartItems } = useApp();
 
-  const products: Product[] = [
-    {
-      id: 1,
-      name: 'Reflection Vinyl',
-      price: 1.00,
-      image: reflectionCover,
-      description: 'Limited edition vinyl pressing of Reflection.'
-    },
-    {
-      id: 2,
-      name: 'I Cry Single',
-      price: 1.00,
-      image: iCryCover,
-      description: 'Official release of the single "I Cry".'
-    },
-    {
-      id: 3,
-      name: 'Cocoon Single',
-      price: 1.00,
-      image: cocoonCover,
-      description: 'Official release of the single "Cocoon".'
-    },
-    {
-      id: 4,
-      name: 'Hoffman EP1',
-      price: 1.00,
-      image: hoffmanEPCover,
-      description: 'The debut EP from Jake Hoffman.'
-    }
-  ];
+  // Shop is currently empty / "Coming soon"
+  const products: any[] = [];
 
   const isInCart = (id: number) => cartItems.some((item: any) => item.id === id);
 
@@ -79,7 +39,7 @@ const Shop = () => {
           ))}
         </div>
       ) : (
-        <div className="coming-soon" style={{textAlign: 'center', padding: '5rem 0', opacity: 0.5}}>Coming soon</div>
+        <div className="coming-soon" style={{textAlign: 'center', padding: '5rem 0', opacity: 0.5, fontFamily: 'var(--font-wild)', textTransform: 'uppercase', letterSpacing: '0.1em'}}>Coming soon</div>
       )}
     </div>
   );
