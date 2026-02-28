@@ -1,5 +1,9 @@
-import { useCart } from '../App';
+import { useApp } from '../App';
 import '../styles/Pages.css';
+import reflectionCover from '../assets/ReflectionCover.png';
+import iCryCover from '../assets/ICrySingle.png';
+import cocoonCover from '../assets/CocoonSingle.png';
+import hoffmanEPCover from '../assets/HoffmanEP1.png';
 
 interface Product {
   id: number;
@@ -10,12 +14,9 @@ interface Product {
 }
 
 const Shop = () => {
-  const { addToCart, cartItems } = useCart();
+  const { addToCart, cartItems } = useApp();
 
-  // FUTURE UPLOADS: Add new product objects to this array.
-  // Format: { id: number, name: 'Title', price: 1.00, image: placeholderVariable, description: 'Desc' }
   const products: Product[] = [
-    /*
     {
       id: 1,
       name: 'Reflection Vinyl',
@@ -23,11 +24,30 @@ const Shop = () => {
       image: reflectionCover,
       description: 'Limited edition vinyl pressing of Reflection.'
     },
-    ...
-    */
+    {
+      id: 2,
+      name: 'I Cry Single',
+      price: 1.00,
+      image: iCryCover,
+      description: 'Official release of the single "I Cry".'
+    },
+    {
+      id: 3,
+      name: 'Cocoon Single',
+      price: 1.00,
+      image: cocoonCover,
+      description: 'Official release of the single "Cocoon".'
+    },
+    {
+      id: 4,
+      name: 'Hoffman EP1',
+      price: 1.00,
+      image: hoffmanEPCover,
+      description: 'The debut EP from Jake Hoffman.'
+    }
   ];
 
-  const isInCart = (id: number) => cartItems.some(item => item.id === id);
+  const isInCart = (id: number) => cartItems.some((item: any) => item.id === id);
 
   return (
     <div className="container shop-container-wide">

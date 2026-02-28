@@ -1,6 +1,7 @@
-import { useState, createContext, useContext, ReactNode } from 'react';
+import { useState, createContext, useContext, ReactNode, useRef, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
-import Works from './pages/Works';
+import Videos from './pages/Videos';
+import Music from './pages/Music';
 import Shows from './pages/Shows';
 import Shop from './pages/Shop';
 import Contact from './pages/Contact';
@@ -13,41 +14,40 @@ import contactIcon from './assets/contact.png';
 import rhinoLogo from './assets/rhino-stencil-black.png';
 import './styles/App.css';
 
-// Cart Context for global state
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  description: string;
-}
+// Context for global state
+interface Product { id: number; name: string; price: number; image: string; description: string; }
+interface AudioTrack { id: string; title: string; file: string; }
 
-interface CartContextType {
+interface AppContextType {
   cartItems: Product[];
   addToCart: (product: Product) => void;
   removeFromCart: (productId: number) => void;
   clearCart: () => void;
+  // Audio Persistent Player
+  currentTrack: AudioTrack | null;
+  isPlaying: boolean;
+  playTrack: (track: AudioTrack) => void;
+  stopAudio: () => void;
+  toggleAudio: () => void;
 }
 
-const CartContext = createContext<CartContextType | undefined>(undefined);
+const AppContext = createContext<AppContextType | undefined>(undefined);
 
-export const useCart = () => {
-  const context = useContext(CartContext);
-  if (!context) throw new Error("useCart must be used within a CartProvider");
+export const useApp = () => {
+  const context = useContext(AppContext);
+  if (!context) throw new Error("useApp must be used within an AppProvider");
   return context;
 };
 
 function Intro({ onFinish }: { onFinish: () => void }) {
   const [active, setActive] = useState(true);
-  
   useEffect(() => {
     const timer = setTimeout(() => {
       setActive(false);
-      setTimeout(onFinish, 1000); // Wait for fade out
-    }, 3000); // Back to 3s to allow for the glow
+      setTimeout(onFinish, 1000);
+    }, 2000);
     return () => clearTimeout(timer);
   }, [onFinish]);
-
   return (
     <div className={`intro-container ${!active ? 'fade-out' : ''}`}>
       <div className="intro-rhino-wrapper">
@@ -57,32 +57,54 @@ function Intro({ onFinish }: { onFinish: () => void }) {
   );
 }
 
-// Separate component to use useEffect properly
-import { useEffect } from 'react';
-
-export const CartProvider = ({ children }: { children: ReactNode }) => {
+export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [currentTrack, setCurrentTrack] = useState<AudioTrack | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const addToCart = (product: Product) => {
-    setCartItems(prev => [...prev, product]);
-  };
-
-  const removeFromCart = (productId: number) => {
-    setCartItems(prev => prev.filter(item => item.id !== productId));
-  };
-
+  const addToCart = (product: Product) => setCartItems(prev => [...prev, product]);
+  const removeFromCart = (productId: number) => setCartItems(prev => prev.filter(item => item.id !== productId));
   const clearCart = () => setCartItems([]);
 
+  const playTrack = (track: AudioTrack) => {
+    setCurrentTrack(track);
+    setIsPlaying(true);
+  };
+
+  const stopAudio = () => {
+    setIsPlaying(false);
+    if (audioRef.current) audioRef.current.pause();
+  };
+
+  const toggleAudio = () => {
+    if (isPlaying) {
+      audioRef.current?.pause();
+    } else {
+      audioRef.current?.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  useEffect(() => {
+    if (currentTrack && audioRef.current) {
+      audioRef.current.src = currentTrack.file;
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  }, [currentTrack]);
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
+    <AppContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, currentTrack, isPlaying, playTrack, stopAudio, toggleAudio }}>
       {children}
-    </CartContext.Provider>
+      <audio ref={audioRef} onEnded={() => setIsPlaying(false)} />
+    </AppContext.Provider>
   );
 };
 
 function AppContent() {
   const [introState, setIntroState] = useState<'playing' | 'finished'>('playing');
-  const { cartItems } = useCart();
+  const { cartItems, currentTrack, isPlaying, toggleAudio, stopAudio } = useApp();
 
   if (introState === 'playing') {
     return <Intro onFinish={() => setIntroState('finished')} />;
@@ -91,6 +113,22 @@ function AppContent() {
   return (
     <Router>
       <div className="app-fade-in">
+        {/* Global Persistent Player UI */}
+        {currentTrack && (
+          <div className={`persistent-player ${isPlaying ? 'active' : ''}`}>
+            <div className="player-track-info">
+              <span className="now-playing-label">Now Playing</span>
+              <span className="track-name">{currentTrack.title}</span>
+            </div>
+            <div className="player-controls">
+              <button onClick={toggleAudio} className="play-pause-btn">
+                {isPlaying ? 'PAUSE' : 'PLAY'}
+              </button>
+              <button onClick={stopAudio} className="close-player-btn">✕</button>
+            </div>
+          </div>
+        )}
+
         <header>
           <div className="container header-container">
             <div className="logo-container">
@@ -98,7 +136,6 @@ function AppContent() {
                 <img src={logo} alt="Jake Hoffman" />
               </NavLink>
             </div>
-            {/* Global Cart Icon */}
             <NavLink to="/cart" className="global-cart-link">
               <div className="cart-icon-wrapper">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -115,26 +152,18 @@ function AppContent() {
         <nav>
           <div className="container">
             <ul>
-              <li>
-                <NavLink to="/works" className={({ isActive }) => isActive ? 'active' : ''}>
+              <li className="nav-dropdown">
+                <NavLink to="/videos" className={({ isActive }) => (isActive || window.location.pathname === '/music') ? 'active' : ''}>
                   <img src={worksIcon} alt="Works" className="nav-icon" />
                 </NavLink>
+                <div className="dropdown-content">
+                  <NavLink to="/videos">VIDEOS</NavLink>
+                  <NavLink to="/music">MUSIC</NavLink>
+                </div>
               </li>
-              <li>
-                <NavLink to="/shows" className={({ isActive }) => isActive ? 'active' : ''}>
-                  <img src={showsIcon} alt="Shows" className="nav-icon" />
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/shop" className={({ isActive }) => isActive ? 'active' : ''}>
-                  <img src={shopIcon} alt="Shop" className="nav-icon" />
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/contact" className={({ isActive }) => isActive ? 'active' : ''}>
-                  <img src={contactIcon} alt="Contact" className="nav-icon" />
-                </NavLink>
-              </li>
+              <li><NavLink to="/shows"><img src={showsIcon} alt="Shows" className="nav-icon" /></NavLink></li>
+              <li><NavLink to="/shop"><img src={shopIcon} alt="Shop" className="nav-icon" /></NavLink></li>
+              <li><NavLink to="/contact"><img src={contactIcon} alt="Contact" className="nav-icon" /></NavLink></li>
             </ul>
           </div>
         </nav>
@@ -142,7 +171,8 @@ function AppContent() {
         <main>
           <Routes>
             <Route path="/" element={null} />
-            <Route path="/works" element={<Works />} />
+            <Route path="/videos" element={<Videos />} />
+            <Route path="/music" element={<Music />} />
             <Route path="/shows" element={<Shows />} />
             <Route path="/shop" element={<Shop />} />
             <Route path="/contact" element={<Contact />} />
@@ -156,9 +186,9 @@ function AppContent() {
 
 function App() {
   return (
-    <CartProvider>
+    <AppProvider>
       <AppContent />
-    </CartProvider>
+    </AppProvider>
   );
 }
 

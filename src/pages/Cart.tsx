@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { useCart } from '../App';
+import { useApp } from '../App';
 import '../styles/Pages.css';
 
-const PAYPAL_CLIENT_ID = "sb"; // "sb" for sandbox. Replace with your LIVE Client ID later.
+const PAYPAL_CLIENT_ID = "sb"; // Replace with your LIVE Client ID later.
 
 const Cart = () => {
-  const { cartItems, removeFromCart, clearCart } = useCart();
+  const { cartItems, removeFromCart, clearCart } = useApp();
   const [orderConfirmed, setOrderConfirmed] = useState(false);
   const [orderDetails, setOrderDetails] = useState<any>(null);
 
-  const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+  const total = cartItems.reduce((sum: number, item: any) => sum + item.price, 0);
 
   const handleApprove = (data: any, actions: any) => {
     return actions.order.capture().then((details: any) => {
@@ -57,7 +57,7 @@ const Cart = () => {
           ) : (
             <div className="cart-content">
               <div className="cart-items-list">
-                {cartItems.map((item, index) => (
+                {cartItems.map((item: any, index: number) => (
                   <div key={index} className="cart-item-row">
                     <img src={item.image} alt={item.name} className="cart-item-thumb" />
                     <div className="cart-item-info">
@@ -92,7 +92,7 @@ const Cart = () => {
                               description: "Jake Hoffman Music Store Purchase",
                               amount: {
                                 currency_code: "USD",
-                                value: total.toString(),
+                                value: total.toFixed(2),
                               },
                               payee: {
                                 email_address: "JakeHoffmanMusic@gmail.com"
