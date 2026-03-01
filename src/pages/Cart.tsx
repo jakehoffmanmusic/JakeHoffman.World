@@ -33,7 +33,7 @@ const Cart = () => {
               <p><strong>Total Paid:</strong> ${orderDetails?.purchase_units[0]?.amount?.value}</p>
             </div>
             <p className="email-note">A receipt has been sent to your email.</p>
-            <a href="/" className="back-to-shop-btn">Go Home</a>
+            <a href="/" className="back-to-shop-btn">Return Home</a>
           </div>
         </div>
       </div>
@@ -52,7 +52,7 @@ const Cart = () => {
           {cartItems.length === 0 ? (
             <div className="empty-cart">
               <p>Your cart is empty.</p>
-              <a href="/" className="back-to-shop-btn">Go Home</a>
+              <a href="/" className="back-to-shop-btn">Return Home</a>
             </div>
           ) : (
             <div className="cart-content">
