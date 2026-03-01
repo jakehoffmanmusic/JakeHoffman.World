@@ -3,7 +3,7 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useApp } from '../App';
 import '../styles/Pages.css';
 
-const PAYPAL_CLIENT_ID = "sb"; // Replace with your LIVE Client ID later.
+const PAYPAL_CLIENT_ID = "AR3he9CUCJRJ4JP73_yJgfg0U1OcVq0xlPKWqQFKmQ5S8hzL_ouzBL39Wuz9e8vWqYXwEyhULwVDni50"; // LIVE Client ID
 
 const Cart = () => {
   const { cartItems, removeFromCart, clearCart } = useApp();
