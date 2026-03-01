@@ -1,6 +1,8 @@
 import { useApp } from '../App';
 import '../styles/Pages.css';
 import reflectionCover from '../assets/music/REFLECTION (Cover Art).png';
+import officialStoreImg from '../assets/official-store.jpg';
+import buyDirectImg from '../assets/buy-direct.jpg';
 
 interface Product {
   id: number;
@@ -29,8 +31,8 @@ const Shop = () => {
   return (
     <div className="container shop-container-wide">
       <div className="shop-header">
-        <h2>Official Store</h2>
-        <p>Direct from the artist to you.</p>
+        <img src={officialStoreImg} alt="Official Store" className="handwritten-header-main" />
+        <img src={buyDirectImg} alt="Buy Direct from Artist" className="handwritten-header-sub" />
       </div>
 
       {products.length > 0 ? (

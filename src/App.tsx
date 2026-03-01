@@ -12,6 +12,9 @@ import showsIcon from './assets/shows.png';
 import shopIcon from './assets/shop.png';
 import contactIcon from './assets/contact.png';
 import rhinoLogo from './assets/rhino-stencil-black.png';
+import cartImg from './assets/cart-icon.jpg';
+import videosImg from './assets/videos-dropdown.png';
+import songsImg from './assets/songs-dropdown.png';
 import './styles/App.css';
 
 // Context for global state
@@ -211,11 +214,7 @@ function AppContent() {
             </div>
             <NavLink to="/cart" className="global-cart-link">
               <div className="cart-icon-wrapper">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <path d="M16 10a4 4 0 0 1-8 0"></path>
-                </svg>
+                <img src={cartImg} alt="Cart" className="handwritten-cart-icon" />
                 {cartItems.length > 0 && <span className="cart-count">{cartItems.length}</span>}
               </div>
             </NavLink>
@@ -230,8 +229,12 @@ function AppContent() {
                   <img src={worksIcon} alt="Works" className="nav-icon" />
                 </NavLink>
                 <div className="dropdown-content">
-                  <NavLink to="/videos">VIDEOS</NavLink>
-                  <NavLink to="/music">MUSIC</NavLink>
+                  <NavLink to="/videos">
+                    <img src={videosImg} alt="Videos" className="dropdown-handwritten-icon" />
+                  </NavLink>
+                  <NavLink to="/music">
+                    <img src={songsImg} alt="Songs" className="dropdown-handwritten-icon" />
+                  </NavLink>
                 </div>
               </li>
               <li><NavLink to="/shows"><img src={showsIcon} alt="Shows" className="nav-icon" /></NavLink></li>

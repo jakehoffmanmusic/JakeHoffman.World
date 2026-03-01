@@ -3,11 +3,14 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useApp } from '../App';
 import '../styles/Pages.css';
 
+import thankYouImg from '../assets/thank-you-order.jpg';
+import returnHomeImg from '../assets/return-home.jpg';
+
 const PAYPAL_CLIENT_ID = "AR3he9CUCJRJ4JP73_yJgfg0U1OcVq0xlPKWqQFKmQ5S8hzL_ouzBL39Wuz9e8vWqYXwEyhULwVDni50"; // LIVE Client ID
 
 const Cart = () => {
   const { cartItems, removeFromCart, clearCart } = useApp();
-  const [orderConfirmed, setOrderConfirmed] = useState(false);
+  const [orderConfirmed, setOrderConfirmed] = useState(false); // Reverting forced visible for security
   const [orderDetails, setOrderDetails] = useState<any>(null);
 
   const total = cartItems.reduce((sum: number, item: any) => sum + item.price, 0);
@@ -25,15 +28,16 @@ const Cart = () => {
       <div className="container">
         <div className="confirmation-page">
           <div className="confirmation-card">
-            <div className="success-icon">✓</div>
-            <h2>Thank you for your order!</h2>
-            <p>Your purchase was successful.</p>
+            <img src={thankYouImg} alt="Thank you for your order" className="handwritten-thank-you" />
+            <p style={{marginTop: '1rem'}}>Your purchase was successful.</p>
             <div className="order-summary">
               <p><strong>Order ID:</strong> {orderDetails?.id}</p>
               <p><strong>Total Paid:</strong> ${orderDetails?.purchase_units[0]?.amount?.value}</p>
             </div>
-            <p className="email-note">A receipt has been sent to your email.</p>
-            <a href="/" className="back-to-shop-btn">Return Home</a>
+            <p className="email-note" style={{textAlign: 'center'}}>A receipt has been sent to your email.</p>
+            <a href="/" className="return-home-img-btn">
+              <img src={returnHomeImg} alt="Return Home" />
+            </a>
           </div>
         </div>
       </div>

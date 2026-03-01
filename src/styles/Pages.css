@@ -44,9 +44,7 @@
   transition: opacity 0.3s ease;
 }
 
-.video-placeholder:hover img {
-  opacity: 0.9;
-}
+.video-placeholder:hover img { opacity: 0.9; }
 
 .big-play-btn {
   position: absolute;
@@ -64,9 +62,7 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-.video-placeholder:hover .big-play-btn {
-  transform: scale(1.1);
-}
+.video-placeholder:hover .big-play-btn { transform: scale(1.1); }
 
 .video-player-container iframe {
   position: absolute;
@@ -146,7 +142,7 @@
   max-width: 280px;
 }
 
-/* MUSIC PAGE - CLEAN REBUILD */
+/* MUSIC PAGE */
 .music-page-container.smaller {
   max-width: 900px;
   margin: 0 auto;
@@ -183,7 +179,7 @@
 .release-cover-wrapper img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Shows full image without cropping */
+  object-fit: contain;
   background: #000;
 }
 
@@ -241,12 +237,7 @@
 .single-card { cursor: pointer; transition: transform 0.3s ease; }
 .single-card:hover { transform: translateY(-10px); }
 .single-cover { position: relative; aspect-ratio: 1/1; background: #eee; margin-bottom: 1rem; overflow: hidden; }
-.single-cover img { 
-  width: 100%; 
-  height: 100%; 
-  object-fit: contain; /* Shows full image */
-  background: #000;
-}
+.single-cover img { width: 100%; height: 100%; object-fit: contain; background: #000; }
 .single-play-overlay {
   position: absolute; inset: 0; background: rgba(0,0,0,0.2);
   display: flex; align-items: center; justify-content: center;
@@ -283,25 +274,16 @@
 .shop-grid-small { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding-bottom: 5rem; }
 
 .product-image-container-small {
-  width: 100%;
-  aspect-ratio: 1/1;
-  overflow: hidden;
-  background: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%; aspect-ratio: 1/1; overflow: hidden; background: #000;
+  display: flex; justify-content: center; align-items: center;
 }
-
-.product-image-container-small img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
+.product-image-container-small img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
 .product-card-small {
   background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(10px); border-radius: 4px;
   overflow: hidden; transition: all 0.3s ease; display: flex; flex-direction: column;
 }
+.product-details-small { padding: 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; text-align: center; }
 .product-details-small h3 { font-size: 0.9rem; margin: 0; font-weight: 700; font-family: var(--font-wild); text-transform: uppercase; }
 .product-price-small { font-size: 0.85rem; font-weight: 600; color: #000; font-family: var(--font-mono); }
 .buy-now-btn-small {
@@ -335,6 +317,24 @@
   background: #000; color: #fff; padding: 1rem 2.5rem; border: none; cursor: pointer;
   text-transform: uppercase; font-weight: 700; display: inline-block; letter-spacing: 0.1em;
   transition: transform 0.2s ease;
+}
+
+/* Confirmation Page */
+.confirmation-page { display: flex; justify-content: center; padding: 4rem 0; }
+.confirmation-card {
+  background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px);
+  padding: 3rem; border-radius: 8px; text-align: center;
+  max-width: 500px; width: 100%; box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+}
+.success-icon {
+  width: 60px; height: 60px; background: #000; color: #fff;
+  border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 2rem; margin: 0 auto 2rem auto;
+}
+.order-summary { 
+  margin: 2rem 0; padding: 1.5rem; background: rgba(0,0,0,0.05); 
+  border-radius: 4px; text-align: center; display: flex; flex-direction: column;
+  align-items: center; gap: 0.5rem;
 }
 
 /* Contact Page Handwritten Styles */

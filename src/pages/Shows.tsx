@@ -1,4 +1,5 @@
 import '../styles/Pages.css';
+import comingSoonImg from '../assets/shows-coming-soon.png';
 
 const Shows = () => {
   // FUTURE UPLOADS: Add new show objects to this array.
@@ -10,7 +11,7 @@ const Shows = () => {
       date: 'OCT 11', 
       venue: 'Demanna Center', 
       location: 'New York, NY', 
-      ticketLink: 'https://imgs.search.brave.com/p1yjkTjcQlkFKjcXyWwgCjfShzzLTkczKCtae_yc0Hk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9mYXQt/bW91c2UtbGllcy1p/dHMtYmFjay1jaGVl/c2Utc3Bh/Y2UtdGV4/dC1mYXQtbW91c2Ut/bGllcy1pdHMtYmFj/ay1jaGVlc2Utc3Bh/Y2UtdGV4dC0zMzU4/NjIxMzEuanBn' 
+      ticketLink: 'https://imgs.search.brave.com/p1yjkTjcQlkFKjcXyWwgCjfShzzLTkczKCtae_yc0Hk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9mYXQt/bW91c2UtbGllcy1p/dHMtYmFjay1jaGVl/c2Utc3Bh/Y2UtdGV4dC0zMzU4/NjIxMzEuanBn' 
     } 
     */
   ];
@@ -33,10 +34,13 @@ const Shows = () => {
               </div>
             </div>
           ))
-        ) : (
-          <div className="coming-soon" style={{textAlign: 'center', padding: '5rem 0', opacity: 0.5}}>Coming soon</div>
-        )}
+        ) : null}
       </div>
+      {shows.length === 0 && (
+        <div className="coming-soon-graphic-container">
+          <img src={comingSoonImg} alt="More shows coming soon" className="coming-soon-handwritten" />
+        </div>
+      )}
     </div>
   );
 };
