@@ -330,11 +330,21 @@ section {
 
 .scrub-bar::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   background: #fff;
   border-radius: 50%;
   cursor: pointer;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+.scrub-bar::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
 }
 
 .player-controls {
