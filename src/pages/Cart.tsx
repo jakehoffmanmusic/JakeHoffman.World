@@ -4,14 +4,17 @@ import { useApp } from '../App';
 import '../styles/Pages.css';
 
 import thankYouImg from '../assets/thank-you-order.jpg';
-import returnHomeImg from '../assets/return-home.jpg';
+import returnHomeImg from '../assets/return-home.png';
 
 const PAYPAL_CLIENT_ID = "AR3he9CUCJRJ4JP73_yJgfg0U1OcVq0xlPKWqQFKmQ5S8hzL_ouzBL39Wuz9e8vWqYXwEyhULwVDni50"; // LIVE Client ID
 
 const Cart = () => {
   const { cartItems, removeFromCart, clearCart } = useApp();
-  const [orderConfirmed, setOrderConfirmed] = useState(false); // Reverting forced visible for security
-  const [orderDetails, setOrderDetails] = useState<any>(null);
+  const [orderConfirmed, setOrderConfirmed] = useState(true); // Forced visible
+  const [orderDetails, setOrderDetails] = useState<any>({
+    id: "SAMPLE-ID",
+    purchase_units: [{ amount: { value: "1.00" } }]
+  });
 
   const total = cartItems.reduce((sum: number, item: any) => sum + item.price, 0);
 

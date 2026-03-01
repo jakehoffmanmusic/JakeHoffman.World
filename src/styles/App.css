@@ -127,6 +127,16 @@ h1, h2, h3 {
   align-items: center;
 }
 
+.handwritten-cart-icon {
+  height: 45px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.global-cart-link:hover .handwritten-cart-icon {
+  transform: scale(1.1);
+}
+
 .cart-count {
   position: absolute;
   top: -8px;
@@ -152,7 +162,7 @@ header {
   z-index: 10;
   padding: 3rem 0 0rem 0;
   text-align: center;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.2) 70%, rgba(255, 255, 255, 0) 100%);
+  background: transparent;
 }
 
 .logo-container {
@@ -169,7 +179,7 @@ nav {
   padding: 1.5rem 0;
   z-index: 100;
   border: none;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.2) 70%, rgba(255, 255, 255, 0) 100%);
+  background: transparent;
 }
 
 nav ul {
@@ -251,17 +261,20 @@ section {
   display: flex;
 }
 
-.dropdown-content a {
-  padding: 0.75rem 1.5rem;
-  font-family: var(--font-wild);
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  color: #000;
-  text-align: center;
+.dropdown-handwritten-icon {
+  height: 22px;
+  width: auto;
+  transition: transform 0.2s ease;
 }
 
-.dropdown-content a:hover {
-  background: rgba(0,0,0,0.05);
+.dropdown-content a {
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.dropdown-content a:hover .dropdown-handwritten-icon {
+  transform: scale(1.1);
 }
 
 /* Persistent Audio Player */
@@ -380,33 +393,28 @@ section {
     gap: 1rem;
   }
   .track-name {
-    display: none; /* Hide name on tiny screens to save space */
+    display: none;
   }
-}
-
-@media (max-width: 768px) {
   .logo-container { 
-    max-width: 240px; /* Smaller logo for mobile */
+    max-width: 240px;
   }
-  
   nav {
     padding: 1rem 0;
   }
-
   nav ul { 
-    gap: 1.5rem; /* Tighter gap for small screens */
+    gap: 1.5rem;
     padding: 0 1rem;
   }
-  
   nav a { 
-    font-size: 0.65rem; /* Smaller icons/text */
+    font-size: 0.65rem;
   }
-
   nav li:nth-child(1) .nav-icon { height: 35px; }
   nav li:nth-child(2) .nav-icon { height: 30px; }
   nav li:nth-child(3) .nav-icon, nav li:nth-child(4) .nav-icon { height: 28px; }
-
   .global-cart-link {
     right: 1rem;
+  }
+  .handwritten-cart-icon {
+    height: 35px;
   }
 }
