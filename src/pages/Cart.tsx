@@ -5,6 +5,7 @@ import '../styles/Pages.css';
 
 import thankYouImg from '../assets/thank-you-order.png';
 import returnHomeImg from '../assets/return-home.png';
+import yourCartImg from '../assets/your-cart.png';
 
 const PAYPAL_CLIENT_ID = "AR3he9CUCJRJ4JP73_yJgfg0U1OcVq0xlPKWqQFKmQ5S8hzL_ouzBL39Wuz9e8vWqYXwEyhULwVDni50"; // LIVE Client ID
 
@@ -51,7 +52,9 @@ const Cart = () => {
     }}>
       <div className="container">
         <div className="cart-page">
-          <h2>Your Cart</h2>
+          <div className="handwritten-cart-header">
+            <img src={yourCartImg} alt="Your Cart" />
+          </div>
           
           {cartItems.length === 0 ? (
             <div className="empty-cart">
