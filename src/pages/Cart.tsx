@@ -95,13 +95,20 @@ const Cart = () => {
                                 value: total.toFixed(2),
                               },
                               payee: {
-                                email_address: "JakeHoffmanMusic@gmail.com"
+                                email_address: "Jakehoffman.world@gmail.com"
                               }
                             },
                           ],
                         });
                       }}
                       onApprove={handleApprove}
+                      onCancel={() => {
+                        alert("Transaction cancelled.");
+                      }}
+                      onError={(err) => {
+                        console.error("PayPal Error:", err);
+                        alert("An error occurred with the PayPal transaction.");
+                      }}
                     />
                   </div>
                 </div>

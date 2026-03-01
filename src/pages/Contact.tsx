@@ -4,7 +4,7 @@ import spotifyImg from '../assets/handwritten-spotify.png';
 import youtubeImg from '../assets/handwritten-youtube.png';
 
 const Contact = () => {
-  const email = 'jakehoffmanmusic@gmail.com';
+  const email = 'Jakehoffman.world@gmail.com';
 
   return (
     <div className="container">
