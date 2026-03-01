@@ -26,14 +26,14 @@ const Cart = () => {
         <div className="confirmation-page">
           <div className="confirmation-card">
             <div className="success-icon">✓</div>
-            <h2>Order Confirmed!</h2>
-            <p>Thank you, {orderDetails?.payer?.name?.given_name}. Your purchase was successful.</p>
+            <h2>Thank you for your order!</h2>
+            <p>Your purchase was successful.</p>
             <div className="order-summary">
               <p><strong>Order ID:</strong> {orderDetails?.id}</p>
               <p><strong>Total Paid:</strong> ${orderDetails?.purchase_units[0]?.amount?.value}</p>
             </div>
             <p className="email-note">A receipt has been sent to your email.</p>
-            <a href="/" className="back-to-shop-btn">Continue Shopping</a>
+            <a href="/" className="back-to-shop-btn">Go Home</a>
           </div>
         </div>
       </div>
