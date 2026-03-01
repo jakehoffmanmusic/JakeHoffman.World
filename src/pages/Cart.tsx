@@ -10,11 +10,8 @@ const PAYPAL_CLIENT_ID = "AR3he9CUCJRJ4JP73_yJgfg0U1OcVq0xlPKWqQFKmQ5S8hzL_ouzBL
 
 const Cart = () => {
   const { cartItems, removeFromCart, clearCart } = useApp();
-  const [orderConfirmed, setOrderConfirmed] = useState(true); // Forced visible
-  const [orderDetails, setOrderDetails] = useState<any>({
-    id: "SAMPLE-ID",
-    purchase_units: [{ amount: { value: "1.00" } }]
-  });
+  const [orderConfirmed, setOrderConfirmed] = useState(false); 
+  const [orderDetails, setOrderDetails] = useState<any>(null);
 
   const total = cartItems.reduce((sum: number, item: any) => sum + item.price, 0);
 
