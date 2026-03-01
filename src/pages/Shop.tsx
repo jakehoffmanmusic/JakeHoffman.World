@@ -2,7 +2,7 @@ import { useApp } from '../App';
 import '../styles/Pages.css';
 import reflectionCover from '../assets/music/REFLECTION (Cover Art).png';
 import officialStoreImg from '../assets/official-store.png';
-import buyDirectImg from '../assets/buy-direct.jpg';
+import buyDirectImg from '../assets/buy-direct.png';
 
 interface Product {
   id: number;
