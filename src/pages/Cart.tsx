@@ -56,7 +56,9 @@ const Cart = () => {
           {cartItems.length === 0 ? (
             <div className="empty-cart">
               <p>Your cart is empty.</p>
-              <a href="/" className="back-to-shop-btn">Return Home</a>
+              <a href="/" className="return-home-img-btn">
+                <img src={returnHomeImg} alt="Return Home" />
+              </a>
             </div>
           ) : (
             <div className="cart-content">
