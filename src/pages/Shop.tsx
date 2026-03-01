@@ -15,16 +15,8 @@ interface Product {
 const Shop = () => {
   const { addToCart, cartItems } = useApp();
 
-  // Test Product
-  const products: Product[] = [
-    {
-      id: 1,
-      name: 'Reflection Vinyl',
-      price: 1.00,
-      image: reflectionCover,
-      description: 'Test product for store verification.'
-    }
-  ];
+  // Products Library: Add new product objects here.
+  const products: Product[] = [];
 
   const isInCart = (id: number) => cartItems.some((item: any) => item.id === id);
 
