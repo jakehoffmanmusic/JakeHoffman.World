@@ -12,7 +12,7 @@ import showsIcon from './assets/shows.png';
 import shopIcon from './assets/shop.png';
 import contactIcon from './assets/contact.png';
 import rhinoLogo from './assets/rhino-stencil-black.png';
-import cartImg from './assets/cart-icon.jpg';
+import cartImg from './assets/cart-icon.png';
 import videosImg from './assets/videos-dropdown.png';
 import songsImg from './assets/songs-dropdown.png';
 import './styles/App.css';
