@@ -27,9 +27,12 @@ interface AppContextType {
   currentTrack: AudioTrack | null;
   isPlaying: boolean;
   playlist: AudioTrack[];
+  progress: number;
+  duration: number;
   playTrack: (track: AudioTrack, releasePlaylist: AudioTrack[]) => void;
   stopAudio: () => void;
   toggleAudio: () => void;
+  seek: (time: number) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -63,6 +66,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [currentTrack, setCurrentTrack] = useState<AudioTrack | null>(null);
   const [playlist, setPlaylist] = useState<AudioTrack[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const wasStoppedManually = useRef(false);
 
@@ -97,6 +102,13 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     setIsPlaying(!isPlaying);
   };
 
+  const seek = (time: number) => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = time;
+      setProgress(time);
+    }
+  };
+
   const playNext = () => {
     if (!currentTrack || wasStoppedManually.current) return;
     const currentIndex = playlist.findIndex(t => t.id === currentTrack.id);
@@ -115,17 +127,41 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [currentTrack]);
 
+  const onTimeUpdate = () => {
+    if (audioRef.current) {
+      setProgress(audioRef.current.currentTime);
+    }
+  };
+
+  const onLoadedMetadata = () => {
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration);
+    }
+  };
+
   return (
-    <AppContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, currentTrack, isPlaying, playlist, playTrack, stopAudio, toggleAudio }}>
+    <AppContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, currentTrack, isPlaying, playlist, progress, duration, playTrack, stopAudio, toggleAudio, seek }}>
       {children}
-      <audio ref={audioRef} onEnded={playNext} />
+      <audio 
+        ref={audioRef} 
+        onEnded={playNext} 
+        onTimeUpdate={onTimeUpdate}
+        onLoadedMetadata={onLoadedMetadata}
+      />
     </AppContext.Provider>
   );
 };
 
 function AppContent() {
   const [introState, setIntroState] = useState<'playing' | 'finished'>('playing');
-  const { cartItems, currentTrack, isPlaying, toggleAudio, stopAudio } = useApp();
+  const { cartItems, currentTrack, isPlaying, progress, duration, toggleAudio, stopAudio, seek } = useApp();
+
+  const formatTime = (time: number) => {
+    if (isNaN(time)) return "0:00";
+    const mins = Math.floor(time / 60);
+    const secs = Math.floor(time % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
 
   if (introState === 'playing') {
     return <Intro onFinish={() => setIntroState('finished')} />;
@@ -134,17 +170,34 @@ function AppContent() {
   return (
     <Router>
       <div className="app-fade-in">
+        {/* Persistent Audio Player UI */}
         {currentTrack && (
-          <div className={`persistent-player ${currentTrack ? 'active' : ''}`}>
-            <div className="player-track-info">
-              <span className="now-playing-label">Now Playing</span>
-              <span className="track-name">{currentTrack.title}</span>
-            </div>
-            <div className="player-controls">
-              <button onClick={toggleAudio} className="play-pause-btn">
-                {isPlaying ? 'PAUSE' : 'PLAY'}
-              </button>
-              <button onClick={stopAudio} className="close-player-btn">✕</button>
+          <div className="persistent-player active">
+            <div className="player-main-content">
+              <div className="player-track-info">
+                <span className="track-name">{currentTrack.title}</span>
+              </div>
+              
+              <div className="player-scrub-container">
+                <span className="time-display">{formatTime(progress)}</span>
+                <input 
+                  type="range" 
+                  min="0" 
+                  max={duration || 0} 
+                  step="0.1"
+                  value={progress} 
+                  onChange={(e) => seek(parseFloat(e.target.value))}
+                  className="scrub-bar"
+                />
+                <span className="time-display">{formatTime(duration)}</span>
+              </div>
+
+              <div className="player-controls">
+                <button onClick={toggleAudio} className="play-pause-btn">
+                  {isPlaying ? 'PAUSE' : 'PLAY'}
+                </button>
+                <button onClick={stopAudio} className="close-player-btn">✕</button>
+              </div>
             </div>
           </div>
         )}

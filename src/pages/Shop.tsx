@@ -1,11 +1,28 @@
 import { useApp } from '../App';
 import '../styles/Pages.css';
+import reflectionCover from '../assets/music/REFLECTION (Cover Art).png';
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  description: string;
+}
 
 const Shop = () => {
   const { addToCart, cartItems } = useApp();
 
-  // Shop is currently empty / "Coming soon"
-  const products: any[] = [];
+  // Test Product
+  const products: Product[] = [
+    {
+      id: 1,
+      name: 'Reflection Vinyl',
+      price: 1.00,
+      image: reflectionCover,
+      description: 'Test product for store verification.'
+    }
+  ];
 
   const isInCart = (id: number) => cartItems.some((item: any) => item.id === id);
 

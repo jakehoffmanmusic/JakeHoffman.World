@@ -267,59 +267,91 @@ section {
 /* Persistent Audio Player */
 .persistent-player {
   position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%) translateY(150%);
+  bottom: 0;
+  left: 0;
+  width: 100%;
   background: #000;
   color: #fff;
   padding: 1rem 2rem;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
   z-index: 9999;
-  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  width: auto;
-  min-width: 300px;
-  border-radius: 2px;
+  transition: transform 0.5s ease;
+  transform: translateY(100%);
 }
 
 .persistent-player.active {
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
+}
+
+.player-main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
 .player-track-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.now-playing-label {
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  opacity: 0.6;
+  min-width: 150px;
 }
 
 .track-name {
   font-family: var(--font-wild);
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.player-scrub-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.time-display {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  min-width: 35px;
+  opacity: 0.7;
+}
+
+.scrub-bar {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.scrub-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .player-controls {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .play-pause-btn {
   background: #fff;
   color: #000;
   border: none;
-  padding: 0.4rem 1rem;
+  padding: 0.5rem 1.2rem;
   font-family: var(--font-wild);
   font-size: 0.6rem;
   cursor: pointer;
+  border-radius: 2px;
 }
 
 .close-player-btn {
@@ -332,6 +364,15 @@ section {
 }
 
 .close-player-btn:hover { opacity: 1; }
+
+@media (max-width: 768px) {
+  .player-main-content {
+    gap: 1rem;
+  }
+  .track-name {
+    display: none; /* Hide name on tiny screens to save space */
+  }
+}
 
 @media (max-width: 768px) {
   .logo-container { 
