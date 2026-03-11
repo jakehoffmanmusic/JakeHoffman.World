@@ -6,6 +6,7 @@ import Shows from './pages/Shows';
 import Shop from './pages/Shop';
 import Contact from './pages/Contact';
 import Cart from './pages/Cart';
+import Press from './pages/Press';
 import logo from './assets/logo.png';
 import worksIcon from './assets/works.png';
 import showsIcon from './assets/shows.png';
@@ -253,6 +254,7 @@ function AppContent() {
             <Route path="/shop" element={<Shop />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/press" element={<Press />} />
           </Routes>
         </main>
       </div>
