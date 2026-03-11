@@ -9,7 +9,7 @@ const Press = () => {
         <div className="press-square text-square">
           <div className="square-content">
             <p>
-              Hi, welcome to my press page. Thank you for being here. This video to your right is a song I wrote called "Priceless" from a show we played in 2025. Its about my relationship with an individual life's limited nature. 
+              Hi, welcome to my press page. Thank you for being here. The video to your right is a song I wrote called "Priceless" from a show we played in 2025. Its about my relationship with an individual life's limited nature. 
             </p>
             <p>
               I focus my writing on relationships: relationships between people, groups, species, between the inside and outside world, and the many relationships which exist within each and every one of us. To explore more, visit the "Works" section of this site.
