@@ -9,7 +9,7 @@ const Press = () => {
         <div className="press-square text-square">
           <div className="square-content">
             <p>
-              Hi, welcome to my press page. Thank you for being here. The video to your right is a song I wrote called "Priceless" from a show we played in 2025. Its about my relationship with life's limited nature and how that often dissapointing fact is what gives Life its value. 
+              Hi, welcome to my press page. Thank you for being here. The video to your right is a song I wrote called "Priceless" from a show we played in 2025. Its about my relationship with life's limited nature. 
             </p>
             <p>
               I focus my writing on relationships: relationships between people, groups, species, between the inside and outside world, and the many relationships which exist within each and every one of us. To explore more, visit the "Works" section of this site.
@@ -43,7 +43,7 @@ const Press = () => {
         <div className="press-square text-square">
           <div className="square-content">
             <p>
-              <strong>Natural State</strong> is an immersive concert series I am producing. It is an evolving format which gives an audience the opportunity to intuitively explore music first hand and understand the pieces at play. 
+              <strong>"Natural State"</strong> is an immersive concert series I am producing. It is an evolving format which gives an audience the opportunity to intuitively explore music first hand and understand the pieces at play. 
             </p>
             <p>
               The first experience will take place on October 17th in New York City at The DiMenna Center for Classical Music.
