@@ -5,11 +5,11 @@ const Press = () => {
     <div className="container press-grid-container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
       <div className="press-grid">
         
-        {/* TOP LEFT: Text */}
-        <div className="press-square text-square">
+        {/* TOP LEFT: Text Intro */}
+        <div className="press-square text-square press-order-1">
           <div className="square-content">
             <p>
-              Hi, welcome to my press page. Thank you for being here. The video to your right is a song I wrote called "Priceless" from a show we played in 2025. Its about my relationship with life's limited nature. 
+              Hi, welcome to my press page. Thank you for being here. 
             </p>
             <p>
               I focus my writing on relationships: relationships between people, groups, species, between the inside and outside world, and the many relationships which exist within each and every one of us. To explore more, visit the "Works" section of this site.
@@ -18,7 +18,7 @@ const Press = () => {
         </div>
 
         {/* TOP RIGHT: Video (Priceless) */}
-        <div className="press-square video-square">
+        <div className="press-square video-square press-order-2">
           <iframe
             src="https://www.youtube.com/embed/yl-1vSMoeNw"
             title="Priceless - Live 2025"
@@ -28,19 +28,8 @@ const Press = () => {
           ></iframe>
         </div>
 
-        {/* BOTTOM LEFT: Video (Second Video) */}
-        <div className="press-square video-square">
-          <iframe
-            src="https://www.youtube.com/embed/7hZecSbF1_E"
-            title="Press Video 2"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
-
         {/* BOTTOM RIGHT: Text (Natural State) */}
-        <div className="press-square text-square">
+        <div className="press-square text-square press-order-3">
           <div className="square-content">
             <p>
               <strong>"Natural State"</strong> is an immersive concert series I am producing. It is an evolving format which gives an audience the opportunity to intuitively explore music first hand and understand the pieces at play. 
@@ -49,6 +38,17 @@ const Press = () => {
               The first experience will take place on October 17th in New York City at The DiMenna Center for Classical Music.
             </p>
           </div>
+        </div>
+
+        {/* BOTTOM LEFT: Video (Second Video) */}
+        <div className="press-square video-square press-order-4">
+          <iframe
+            src="https://www.youtube.com/embed/7hZecSbF1_E"
+            title="Press Video 2"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
         </div>
 
       </div>
@@ -95,14 +95,24 @@ const Press = () => {
         }
         @media (max-width: 900px) {
           .press-grid {
-            grid-template-columns: 1fr;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
           }
           .press-square {
-            aspect-ratio: auto;
-            min-height: 300px;
+            width: 100%;
           }
-          .video-square {
-            aspect-ratio: 16 / 9;
+          .press-order-1 { order: 1; }
+          .press-order-2 { order: 2; }
+          .press-order-3 { order: 3; }
+          .press-order-4 { order: 4; }
+          
+          .text-square {
+            padding: 2rem;
+          }
+          .square-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
           }
         }
       `}</style>
