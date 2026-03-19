@@ -7,6 +7,7 @@ import Shop from './pages/Shop';
 import Contact from './pages/Contact';
 import Cart from './pages/Cart';
 import Press from './pages/Press';
+import ProductDetail from './pages/ProductDetail';
 import logo from './assets/logo.png';
 import worksIcon from './assets/works.png';
 import showsIcon from './assets/shows.png';
@@ -16,6 +17,8 @@ import rhinoLogo from './assets/rhino-stencil-black.png';
 import cartImg from './assets/cart-icon.png';
 import videosImg from './assets/videos-dropdown.png';
 import songsImg from './assets/songs-dropdown.png';
+import merchImg from './assets/merch-button.png';
+import originalArtImg from './assets/original-art-button.png';
 import './styles/App.css';
 
 // Context for global state
@@ -229,7 +232,7 @@ function AppContent() {
                 <NavLink to="/videos" className={({ isActive }) => (isActive || window.location.pathname === '/music') ? 'active' : ''}>
                   <img src={worksIcon} alt="Works" className="nav-icon" />
                 </NavLink>
-                <div className="dropdown-content">
+                <div className="dropdown-content works-dropdown">
                   <NavLink to="/videos">
                     <img src={videosImg} alt="Videos" className="dropdown-handwritten-icon" />
                   </NavLink>
@@ -239,7 +242,19 @@ function AppContent() {
                 </div>
               </li>
               <li><NavLink to="/shows"><img src={showsIcon} alt="Shows" className="nav-icon" /></NavLink></li>
-              <li><NavLink to="/shop"><img src={shopIcon} alt="Shop" className="nav-icon" /></NavLink></li>
+              <li className="nav-dropdown">
+                <NavLink to="/shop" className={({ isActive }) => isActive ? 'active' : ''}>
+                  <img src={shopIcon} alt="Shop" className="nav-icon" />
+                </NavLink>
+                <div className="dropdown-content">
+                  <a href="https://www.redbubble.com/shop/ap/179390726" target="_blank" rel="noopener noreferrer">
+                    <img src={merchImg} alt="Merch" className="shop-dropdown-icon" />
+                  </a>
+                  <NavLink to="/shop">
+                    <img src={originalArtImg} alt="Original Art" className="shop-dropdown-icon" />
+                  </NavLink>
+                </div>
+              </li>
               <li><NavLink to="/contact"><img src={contactIcon} alt="Contact" className="nav-icon" /></NavLink></li>
             </ul>
           </div>
@@ -252,6 +267,7 @@ function AppContent() {
             <Route path="/music" element={<Music />} />
             <Route path="/shows" element={<Shows />} />
             <Route path="/shop" element={<Shop />} />
+            <Route path="/product/:productId" element={<ProductDetail />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/press" element={<Press />} />
